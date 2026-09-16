@@ -1,0 +1,5 @@
+package com.driveease.controller;
+
+public class VehicleController {
+
+}

@@ -1,0 +1,5 @@
+package com.driveease.vehicle.service;
+
+public class VehicleService {
+
+}

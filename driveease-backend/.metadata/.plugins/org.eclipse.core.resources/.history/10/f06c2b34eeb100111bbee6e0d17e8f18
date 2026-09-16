@@ -1,0 +1,30 @@
+package com.driveease.vehicle.dto;
+
+import jakarta.validation.constraints.*;
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+@Data
+public class VehicleRequest {
+
+    @NotBlank
+    private String registrationNumber;
+
+    @NotBlank
+    private String brand;
+
+    @NotBlank
+    private String model;
+
+    @NotBlank
+    private String vehicleType;
+
+    @NotNull
+    @Min(1900)
+    private Integer year;
+
+    @NotNull
+    @DecimalMin(value = "0.0", inclusive = false)
+    private BigDecimal dailyRate;
+}

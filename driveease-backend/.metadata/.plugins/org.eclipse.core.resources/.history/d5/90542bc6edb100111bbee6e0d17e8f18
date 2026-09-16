@@ -1,0 +1,86 @@
+package com.driveease.vehicle.controller;
+
+import com.driveease.vehicle.dto.VehicleRequest;
+import com.driveease.vehicle.entity.Vehicle;
+import com.driveease.vehicle.service.VehicleService;
+
+import jakarta.validation.Valid;
+
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/vehicles")
+@RequiredArgsConstructor
+public class VehicleController {
+
+    private final VehicleService vehicleService;
+
+    @PostMapping
+    public ResponseEntity<Vehicle> createVehicle(
+            @Valid @RequestBody VehicleRequest request) {
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(vehicleService.createVehicle(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Vehicle>> getAllVehicles() {
+
+        return ResponseEntity.ok(
+                vehicleService.getAllVehicles()
+        );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Vehicle> getVehicleById(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                vehicleService.getVehicleById(id)
+        );
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Vehicle> updateVehicle(
+            @PathVariable Long id,
+            @Valid @RequestBody VehicleRequest request) {
+
+        return ResponseEntity.ok(
+                vehicleService.updateVehicle(id, request)
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteVehicle(
+            @PathVariable Long id) {
+
+        vehicleService.deleteVehicle(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/available")
+    public ResponseEntity<List<Vehicle>> getAvailableVehicles() {
+
+        return ResponseEntity.ok(
+                vehicleService.getAvailableVehicles()
+        );
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Vehicle> updateStatus(
+            @PathVariable Long id,
+            @RequestParam String status) {
+
+        return ResponseEntity.ok(
+                vehicleService.updateStatus(id, status)
+        );
+    }
+}

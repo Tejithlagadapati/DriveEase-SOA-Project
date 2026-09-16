@@ -1,0 +1,5 @@
+package com.driveease.vehicle.exception;
+
+public class VehicleNotFoundException {
+
+}

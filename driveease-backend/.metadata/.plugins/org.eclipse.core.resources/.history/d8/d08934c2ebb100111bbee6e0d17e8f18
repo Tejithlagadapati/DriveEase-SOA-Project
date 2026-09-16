@@ -1,0 +1,5 @@
+package com.driveease.dto;
+
+public class VehicleRequest {
+
+}
