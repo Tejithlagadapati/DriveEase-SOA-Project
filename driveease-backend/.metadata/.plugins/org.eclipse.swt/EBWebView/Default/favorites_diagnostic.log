@@ -243,3 +243,32 @@
 2026-09-20 04:33:30.343: [INFO] BookmarksLoadDropped droppedNodes=0
 2026-09-20 04:33:30.343: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
 2026-09-20 05:38:28.236: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-20 10:57:11.407: [INFO] CurrentProfilePath: C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-20 10:57:11.407: [INFO] Profiles total count: 1
+2026-09-20 10:57:11.407: [INFO] Profile: name=Profile 1 path=C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-19T17:32:20.643Z
+2026-09-20 10:57:11.407: [INFO] LastUsedProfileDir: C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-20 10:57:11.407: [INFO] MostRecentlyActiveProfile: name=Profile 1 path=C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-19T17:32:20.643Z
+2026-09-20 10:57:11.407: [INFO] OnDoneLoading sync enabled: 0
+2026-09-20 10:57:11.407: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-09-20 10:57:11.407: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-09-20 10:57:11.407: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-20 11:12:59.871: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-20 11:20:32.439: [INFO] CurrentProfilePath: C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-20 11:20:32.439: [INFO] Profiles total count: 1
+2026-09-20 11:20:32.439: [INFO] Profile: name=Profile 1 path=C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-19T17:32:20.643Z
+2026-09-20 11:20:32.439: [INFO] LastUsedProfileDir: C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-20 11:20:32.439: [INFO] MostRecentlyActiveProfile: name=Profile 1 path=C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-19T17:32:20.643Z
+2026-09-20 11:20:32.439: [INFO] OnDoneLoading sync enabled: 0
+2026-09-20 11:20:32.439: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-09-20 11:20:32.439: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-09-20 11:20:32.439: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-20 11:51:22.135: [INFO] BookmarksSnapshot Shutdown total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1
+2026-09-20 12:01:54.559: [INFO] CurrentProfilePath: C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-20 12:01:54.559: [INFO] Profiles total count: 1
+2026-09-20 12:01:54.559: [INFO] Profile: name=Profile 1 path=C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-19T17:32:20.643Z
+2026-09-20 12:01:54.559: [INFO] LastUsedProfileDir: C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default
+2026-09-20 12:01:54.559: [INFO] MostRecentlyActiveProfile: name=Profile 1 path=C:\Users\tejit\My_Projects\DriveEase-SOA\driveease-backend\.metadata\.plugins\org.eclipse.swt\EBWebView\Default lastActive=2026-09-19T17:32:20.643Z
+2026-09-20 12:01:54.559: [INFO] OnDoneLoading sync enabled: 0
+2026-09-20 12:01:54.559: [INFO] BookmarkModelLoaded, ids_reassigned: 0
+2026-09-20 12:01:54.559: [INFO] BookmarksLoadDropped droppedNodes=0
+2026-09-20 12:01:54.559: [INFO] BookmarksSnapshot Startup total=0 bar=0 other=0 mobile=0 showBar=0 showBarNTP=1

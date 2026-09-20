@@ -85,4 +85,12 @@ public class VehicleController {
                 vehicleService.updateStatus(id, status)
         );
     }
+    
+    @PatchMapping("/internal/{id}/status")
+    public Vehicle updateInternalStatus(
+            @PathVariable Long id,
+            @RequestParam String status) {
+
+        return vehicleService.updateStatus(id, status);
+    }
 }

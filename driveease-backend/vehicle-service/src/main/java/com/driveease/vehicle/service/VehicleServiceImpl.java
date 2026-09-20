@@ -114,40 +114,42 @@ public class VehicleServiceImpl implements VehicleService {
 
         VehicleStatus currentStatus = vehicle.getStatus();
 
-        // Same status - nothing to change
         if (currentStatus == newStatus) {
             return vehicle;
         }
 
-        // AVAILABLE → RESERVED
         if (currentStatus == VehicleStatus.AVAILABLE
                 && newStatus == VehicleStatus.RESERVED) {
 
             vehicle.setStatus(newStatus);
         }
 
-        // RESERVED → RENTED
         else if (currentStatus == VehicleStatus.RESERVED
                 && newStatus == VehicleStatus.RENTED) {
 
             vehicle.setStatus(newStatus);
         }
 
-        // RENTED → AVAILABLE
-        else if (currentStatus == VehicleStatus.RENTED
+        else if (currentStatus == VehicleStatus.RESERVED
                 && newStatus == VehicleStatus.AVAILABLE) {
 
+            // Booking cancelled before rental started
             vehicle.setStatus(newStatus);
         }
 
-        // AVAILABLE → MAINTENANCE
+        else if (currentStatus == VehicleStatus.RENTED
+                && newStatus == VehicleStatus.AVAILABLE) {
+
+            // Vehicle returned after rental
+            vehicle.setStatus(newStatus);
+        }
+
         else if (currentStatus == VehicleStatus.AVAILABLE
                 && newStatus == VehicleStatus.MAINTENANCE) {
 
             vehicle.setStatus(newStatus);
         }
 
-        // MAINTENANCE → AVAILABLE
         else if (currentStatus == VehicleStatus.MAINTENANCE
                 && newStatus == VehicleStatus.AVAILABLE) {
 

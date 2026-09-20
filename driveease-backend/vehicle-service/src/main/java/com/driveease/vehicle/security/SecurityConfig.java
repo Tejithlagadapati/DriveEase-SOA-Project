@@ -27,6 +27,8 @@ public class SecurityConfig {
             )
 
             .authorizeHttpRequests(auth -> auth
+            		
+            	.requestMatchers("/api/internal/**").permitAll()
 
                 // Anyone with a valid JWT can view vehicles
                 .requestMatchers(

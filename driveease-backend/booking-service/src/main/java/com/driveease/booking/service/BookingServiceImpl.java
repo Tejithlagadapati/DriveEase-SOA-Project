@@ -1,36 +1,86 @@
 package com.driveease.booking.service;
 
+import com.driveease.booking.client.InternalVehicleClient;
+import com.driveease.booking.client.UserClient;
+import com.driveease.booking.client.UserResponse;
+import com.driveease.booking.client.VehicleClient;
+import com.driveease.booking.client.VehicleResponse;
 import com.driveease.booking.dto.BookingRequest;
 import com.driveease.booking.entity.Booking;
-import com.driveease.booking.repository.BookingRepository;
 import com.driveease.booking.entity.BookingStatus;
-import org.springframework.stereotype.Service;
-import com.driveease.booking.client.VehicleClient;
-import com.driveease.booking.client.UserClient;
-import com.driveease.booking.client.VehicleResponse;
-import com.driveease.booking.client.UserResponse;
+import com.driveease.booking.repository.BookingRepository;
 
-import java.time.LocalDate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class BookingServiceImpl implements BookingService {
 
-    
-
     private final BookingRepository bookingRepository;
     private final VehicleClient vehicleClient;
+    private final InternalVehicleClient internalVehicleClient;
     private final UserClient userClient;
 
     public BookingServiceImpl(
             BookingRepository bookingRepository,
             VehicleClient vehicleClient,
+            InternalVehicleClient internalVehicleClient,
             UserClient userClient) {
 
         this.bookingRepository = bookingRepository;
         this.vehicleClient = vehicleClient;
+        this.internalVehicleClient = internalVehicleClient;
         this.userClient = userClient;
     }
+
+    // =========================================================
+    // CURRENT USER
+    // =========================================================
+
+    private Long getCurrentUserId() {
+
+        Authentication authentication =
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication();
+
+        if (authentication instanceof JwtAuthenticationToken jwtAuth) {
+
+            return jwtAuth.getToken()
+                    .getClaim("userId");
+        }
+
+        throw new IllegalStateException(
+                "Unable to determine current user"
+        );
+    }
+
+    // =========================================================
+    // ADMIN CHECK
+    // =========================================================
+
+    private boolean isAdmin() {
+
+        Authentication authentication =
+                SecurityContextHolder
+                        .getContext()
+                        .getAuthentication();
+
+        return authentication.getAuthorities()
+                .stream()
+                .anyMatch(authority ->
+                        authority.getAuthority()
+                                .equals("ROLE_ADMIN")
+                );
+    }
+
+    // =========================================================
+    // CREATE BOOKING
+    // =========================================================
 
     @Override
     public Booking createBooking(BookingRequest request) {
@@ -45,9 +95,15 @@ public class BookingServiceImpl implements BookingService {
 
         // 2. Validate User
         UserResponse user;
+
         try {
-            user = userClient.getUserById(request.getUserId());
+
+            user = userClient.getUserById(
+                    request.getUserId()
+            );
+
         } catch (Exception e) {
+
             throw new IllegalStateException(
                     "User does not exist or could not be verified"
             );
@@ -57,16 +113,19 @@ public class BookingServiceImpl implements BookingService {
         VehicleResponse vehicle;
 
         try {
+
             vehicle = vehicleClient.getVehicleById(
                     request.getVehicleId()
             );
+
         } catch (Exception e) {
+
             throw new IllegalStateException(
                     "Vehicle does not exist or could not be verified"
             );
         }
 
-        // 4. Check Vehicle availability
+        // 4. Check vehicle availability
         if ("MAINTENANCE".equals(vehicle.getStatus())
                 || "INACTIVE".equals(vehicle.getStatus())) {
 
@@ -109,23 +168,64 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.save(booking);
     }
 
+    // =========================================================
+    // GET ALL BOOKINGS
+    // =========================================================
+
     @Override
     public List<Booking> getAllBookings() {
 
-        return bookingRepository.findAll();
+        // Admin can see all bookings
+        if (isAdmin()) {
+
+            return bookingRepository.findAll();
+        }
+
+        // Customer can see only their own bookings
+        Long currentUserId = getCurrentUserId();
+
+        return bookingRepository.findByUserId(currentUserId);
     }
+
+    // =========================================================
+    // GET BOOKING BY ID
+    // =========================================================
 
     @Override
     public Booking getBookingById(Long id) {
 
-        return bookingRepository.findById(id)
-                .orElseThrow(() ->
-                    new RuntimeException(
-                        "Booking not found with id: " + id
-                    )
-                );
+        Booking booking =
+                bookingRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Booking not found with id: " + id
+                                )
+                        );
+
+        // Admin can access any booking
+        if (isAdmin()) {
+
+            return booking;
+        }
+
+        // Customer can access only their own booking
+        Long currentUserId = getCurrentUserId();
+
+        if (!booking.getUserId().equals(currentUserId)) {
+
+            throw new org.springframework.security.access.AccessDeniedException(
+                    "You are not authorized to access this booking"
+            );
+        }
+
+        return booking;
     }
-    
+
+    // =========================================================
+    // UPDATE BOOKING STATUS
+    // ADMIN OPERATION
+    // =========================================================
+
     @Override
     public Booking updateBookingStatus(
             Long id,
@@ -133,74 +233,106 @@ public class BookingServiceImpl implements BookingService {
 
         Booking booking = getBookingById(id);
 
-        BookingStatus currentStatus = booking.getStatus();
+        BookingStatus currentStatus =
+                booking.getStatus();
 
         // Same status
         if (currentStatus == newStatus) {
+
             return booking;
         }
 
+        // -----------------------------------------------------
         // PENDING → CONFIRMED
+        // -----------------------------------------------------
+
         if (currentStatus == BookingStatus.PENDING
                 && newStatus == BookingStatus.CONFIRMED) {
 
-            vehicleClient.updateVehicleStatus(
+            internalVehicleClient.updateVehicleStatus(
                     booking.getVehicleId(),
                     "RESERVED"
             );
 
-            booking.setStatus(BookingStatus.CONFIRMED);
+            booking.setStatus(
+                    BookingStatus.CONFIRMED
+            );
         }
 
+        // -----------------------------------------------------
         // CONFIRMED → ACTIVE
+        // -----------------------------------------------------
+
         else if (currentStatus == BookingStatus.CONFIRMED
                 && newStatus == BookingStatus.ACTIVE) {
 
-            vehicleClient.updateVehicleStatus(
+            internalVehicleClient.updateVehicleStatus(
                     booking.getVehicleId(),
                     "RENTED"
             );
 
-            booking.setStatus(BookingStatus.ACTIVE);
+            booking.setStatus(
+                    BookingStatus.ACTIVE
+            );
         }
 
+        // -----------------------------------------------------
         // ACTIVE → COMPLETED
+        // -----------------------------------------------------
+
         else if (currentStatus == BookingStatus.ACTIVE
                 && newStatus == BookingStatus.COMPLETED) {
 
-            vehicleClient.updateVehicleStatus(
+            internalVehicleClient.updateVehicleStatus(
                     booking.getVehicleId(),
                     "AVAILABLE"
             );
 
-            booking.setStatus(BookingStatus.COMPLETED);
+            booking.setStatus(
+                    BookingStatus.COMPLETED
+            );
         }
 
+        // -----------------------------------------------------
         // PENDING → CANCELLED
+        // -----------------------------------------------------
+
         else if (currentStatus == BookingStatus.PENDING
                 && newStatus == BookingStatus.CANCELLED) {
 
-            vehicleClient.updateVehicleStatus(
+            internalVehicleClient.updateVehicleStatus(
                     booking.getVehicleId(),
                     "AVAILABLE"
             );
 
-            booking.setStatus(BookingStatus.CANCELLED);
+            booking.setStatus(
+                    BookingStatus.CANCELLED
+            );
         }
 
+        // -----------------------------------------------------
         // CONFIRMED → CANCELLED
+        // -----------------------------------------------------
+
         else if (currentStatus == BookingStatus.CONFIRMED
                 && newStatus == BookingStatus.CANCELLED) {
 
-            vehicleClient.updateVehicleStatus(
+            internalVehicleClient.updateVehicleStatus(
                     booking.getVehicleId(),
                     "AVAILABLE"
             );
 
-            booking.setStatus(BookingStatus.CANCELLED);
+            booking.setStatus(
+                    BookingStatus.CANCELLED
+            );
         }
 
+        // -----------------------------------------------------
+        // INVALID TRANSITION
+        // -----------------------------------------------------
+
         else {
+
             throw new IllegalStateException(
                     "Invalid booking status transition: "
                             + currentStatus
@@ -211,14 +343,21 @@ public class BookingServiceImpl implements BookingService {
 
         return bookingRepository.save(booking);
     }
-    
+
+    // =========================================================
+    // CANCEL BOOKING
+    // CUSTOMER / ADMIN
+    // =========================================================
     @Override
     public Booking cancelBooking(Long id) {
 
         Booking booking = getBookingById(id);
 
-        BookingStatus currentStatus = booking.getStatus();
+        BookingStatus currentStatus =
+                booking.getStatus();
 
+        // Only PENDING or CONFIRMED bookings
+        // can be cancelled
         if (currentStatus != BookingStatus.PENDING
                 && currentStatus != BookingStatus.CONFIRMED) {
 
@@ -228,17 +367,53 @@ public class BookingServiceImpl implements BookingService {
             );
         }
 
-        booking.setStatus(BookingStatus.CANCELLED);
+        // Mark this booking as cancelled first
+        booking.setStatus(
+                BookingStatus.CANCELLED
+        );
 
-        return bookingRepository.save(booking);
+        bookingRepository.save(booking);
+
+        // Check whether another active booking
+        // still exists for this vehicle
+        List<BookingStatus> activeStatuses = List.of(
+                BookingStatus.PENDING,
+                BookingStatus.CONFIRMED,
+                BookingStatus.ACTIVE
+        );
+
+        boolean hasOtherActiveBooking =
+                bookingRepository
+                        .existsByVehicleIdAndIdNotAndStatusIn(
+                                booking.getVehicleId(),
+                                booking.getId(),
+                                activeStatuses
+                        );
+
+        // Only make vehicle AVAILABLE if
+        // there are no other active bookings
+        if (!hasOtherActiveBooking) {
+
+            internalVehicleClient.updateVehicleStatus(
+                    booking.getVehicleId(),
+                    "AVAILABLE"
+            );
+        }
+
+        return booking;
     }
-    
+
+    // =========================================================
+    // RETURN BOOKING
+    // CUSTOMER / ADMIN
+    // =========================================================
+
     @Override
     public Booking returnBooking(Long id) {
 
         Booking booking = getBookingById(id);
 
-        // Vehicle can only be returned from an ACTIVE rental
+        // Vehicle can only be returned from ACTIVE rental
         if (booking.getStatus() != BookingStatus.ACTIVE) {
 
             throw new IllegalStateException(
@@ -248,15 +423,16 @@ public class BookingServiceImpl implements BookingService {
         }
 
         // Return vehicle to AVAILABLE
-        vehicleClient.updateVehicleStatus(
+        internalVehicleClient.updateVehicleStatus(
                 booking.getVehicleId(),
                 "AVAILABLE"
         );
 
-        // Complete the booking
-        booking.setStatus(BookingStatus.COMPLETED);
+        // Complete booking
+        booking.setStatus(
+                BookingStatus.COMPLETED
+        );
 
         return bookingRepository.save(booking);
     }
-    
 }

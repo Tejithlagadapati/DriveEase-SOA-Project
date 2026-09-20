@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
         name = "VEHICLE-SERVICE",
+        contextId = "vehicleClient",
         configuration = FeignClientConfig.class
 )
 public interface VehicleClient {
@@ -16,11 +17,5 @@ public interface VehicleClient {
     @GetMapping("/api/vehicles/{id}")
     VehicleResponse getVehicleById(
             @PathVariable("id") Long id
-    );
-    
-    @PatchMapping("/api/vehicles/{id}/status")
-    VehicleResponse updateVehicleStatus(
-            @PathVariable("id") Long id,
-            @RequestParam("status") String status
     );
 }

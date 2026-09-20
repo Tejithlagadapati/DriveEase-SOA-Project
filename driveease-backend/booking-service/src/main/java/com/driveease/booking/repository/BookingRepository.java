@@ -22,4 +22,12 @@ public interface BookingRepository
             LocalDate endDate,
             LocalDate startDate
     );
+    
+    List<Booking> findByUserId(Long userId);
+    
+    boolean existsByVehicleIdAndIdNotAndStatusIn(
+            Long vehicleId,
+            Long bookingId,
+            List<BookingStatus> statuses
+    );
 }
