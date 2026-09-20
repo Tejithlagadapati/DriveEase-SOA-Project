@@ -38,16 +38,18 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/api/auth/register",
                     "/api/auth/login"
-                    
                 ).permitAll()
-                
-             // Swagger
+
                 .requestMatchers(
                     "/swagger-ui/**",
                     "/v3/api-docs/**"
                 ).permitAll()
 
                 .anyRequest().authenticated()
+            )
+
+            .oauth2ResourceServer(oauth2 ->
+                oauth2.jwt(jwt -> {})
             );
 
         return http.build();

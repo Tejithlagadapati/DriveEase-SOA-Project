@@ -1,35 +1,87 @@
-0:00:27 Microsoft.Shutdown.OnWindowClosing
-0:00:27 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp
-0:00:27 Microsoft.UnloadController.HasCompletedUnloadProcessing_True
-0:00:27 Microsoft.Shutdown.OnWindowClosing_MaybeClearBrowsingDataOnExit
-0:00:27 Microsoft.Shutdown.OnWindowClosing_ClearBrowsingDataOnExitNotInProgress
-0:00:27 Microsoft.Shutdown.OnWindowClosingPostClearBrowsingData_NoBrowsingDataCleared
-0:00:27 Widget Closed: BrowserWidget
-0:00:27 Microsoft.UnloadController.TabStripEmpty
-0:00:27 Microsoft.UnloadController.HasCompletedUnloadProcessing_True
-0:00:27 Microsoft.Shutdown.OnWindowClosing
-0:00:27 Microsoft.Shutdown.OnWindowClosing_DeleteScheduled
-0:00:27 Microsoft.Last_Browser_Removed
-0:00:27 Microsoft.NewBrowser_Popup
-0:00:28 Microsoft.BrowserList.AddBrowser
-0:00:28 Browser5 Insert active Tab5 at 0
-0:00:28 Tab5 StartNav15 #auto_toplevel
-0:00:28 Tab5 StartNav16 #typed
-0:00:28 Tab5 FinishNav16 ERR_ABORTED
-0:00:28 Tab5 StartNav17 #typed
-0:00:28 Tab5 FinishNav15
-0:00:28 Tab5 PageLoad
-0:00:28 Tab5 FinishNav17
-0:00:28 Tab5 PageLoad
-0:00:28 Microsoft.NewBrowser_Popup
-0:00:28 Microsoft.BrowserList.AddBrowser
-0:00:28 Browser6 Insert active Tab6 at 0
-0:00:28 Tab6 StartNav18 #auto_toplevel
-0:00:28 Tab6 StartNav19 #typed
-0:00:28 Tab6 FinishNav19 ERR_ABORTED
-0:00:28 Tab6 StartNav20 #typed
-0:00:28 Tab6 FinishNav18
-0:00:28 Tab6 PageLoad
-0:00:28 Tab6 FinishNav20
-0:00:28 Tab6 PageLoad
-0:01:12 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp
+0:56:13 Tab5 StartNav37 #typed
+0:56:14 Tab5 FinishNav35
+0:56:14 Tab5 PageLoad
+0:56:14 Tab5 FinishNav37
+0:56:14 Tab5 PageLoad
+0:56:20 Memory Pressure: Moderate
+0:56:28 Microsoft.NewBrowser_Popup
+0:56:28 Microsoft.BrowserList.AddBrowser
+0:56:28 Browser6 Insert active Tab6 at 0
+0:56:28 Tab6 StartNav38 #auto_toplevel
+0:56:28 Tab6 StartNav39 #typed
+0:56:28 Tab6 FinishNav38
+0:56:28 Tab6 PageLoad
+0:56:28 Tab6 FinishNav39
+0:56:28 Tab6 PageLoad
+0:56:28 Tab6 StartNav40 #typed
+0:56:28 Tab6 FinishNav40
+0:56:28 Tab6 PageLoad
+0:56:29 Tab6 StartNav41 #typed
+0:56:29 Tab6 FinishNav41
+0:56:29 Tab6 PageLoad
+0:56:29 Tab6 StartNav42 #typed
+0:56:29 Tab6 FinishNav42
+0:56:29 Tab6 PageLoad
+0:56:30 Memory Pressure: Moderate
+0:56:40 Memory Pressure: Moderate
+0:56:45 Tab6 StartNav43 #typed
+0:56:45 Tab6 FinishNav43
+0:56:45 Tab6 PageLoad
+0:56:46 Tab6 StartNav44 #typed
+0:56:46 Tab6 FinishNav44
+0:56:46 Tab6 PageLoad
+0:56:50 Memory Pressure: Moderate
+0:56:58 Tab6 StartNav45 #typed
+0:56:58 Tab6 FinishNav45
+0:56:58 Tab6 PageLoad
+0:57:00 Memory Pressure: Moderate
+0:57:08 Tab6 StartNav46 #typed
+0:57:08 Tab6 FinishNav46
+0:57:08 Tab6 PageLoad
+0:57:10 Memory Pressure: Moderate
+0:57:10 Tab6 StartNav47 #typed
+0:57:10 Tab6 FinishNav47
+0:57:10 Tab6 PageLoad
+0:57:15 Tab6 StartNav48 #typed
+0:57:15 Tab6 FinishNav48
+0:57:15 Tab6 PageLoad
+0:57:20 Memory Pressure: Moderate
+0:57:30 Memory Pressure: Moderate
+0:57:40 Memory Pressure: Moderate
+0:57:44 Tab6 StartNav49 #typed
+0:57:44 Tab6 FinishNav49
+0:57:44 Tab6 PageLoad
+0:57:50 Memory Pressure: Moderate
+0:58:00 Memory Pressure: Moderate
+0:58:10 Memory Pressure: Moderate
+0:58:20 Memory Pressure: Moderate
+0:58:30 Memory Pressure: Moderate
+0:58:40 Memory Pressure: Moderate
+0:58:50 Memory Pressure: Moderate
+0:59:00 Memory Pressure: Moderate
+0:59:10 Memory Pressure: Moderate
+0:59:20 Memory Pressure: Moderate
+0:59:30 Memory Pressure: Moderate
+0:59:40 Memory Pressure: Moderate
+0:59:50 Memory Pressure: Moderate
+1:00:00 Memory Pressure: Moderate
+1:00:10 Memory Pressure: Moderate
+1:00:20 Memory Pressure: Moderate
+1:00:30 Memory Pressure: Moderate
+1:00:40 Memory Pressure: Moderate
+1:00:50 Memory Pressure: Moderate
+1:01:00 Memory Pressure: Moderate
+1:01:10 Memory Pressure: Moderate
+1:01:20 Memory Pressure: Moderate
+1:01:30 Memory Pressure: Moderate
+1:01:40 Memory Pressure: Moderate
+1:01:50 Memory Pressure: Moderate
+1:02:00 Memory Pressure: Moderate
+1:02:10 Memory Pressure: Moderate
+1:02:20 Memory Pressure: Moderate
+1:02:30 Memory Pressure: Moderate
+1:02:40 Memory Pressure: Moderate
+1:02:50 Memory Pressure: Moderate
+1:03:00 Memory Pressure: Moderate
+1:03:10 Memory Pressure: None
+1:04:57 Microsoft.UnloadController.IsUnclosableApp_IsNotWebApp

@@ -99,16 +99,67 @@ public class VehicleServiceImpl implements VehicleService {
 
         Vehicle vehicle = getVehicleById(id);
 
+        VehicleStatus newStatus;
+
         try {
-            VehicleStatus vehicleStatus =
-                    VehicleStatus.valueOf(status.toUpperCase());
-
-            vehicle.setStatus(vehicleStatus);
-
+            newStatus = VehicleStatus.valueOf(
+                    status.toUpperCase()
+            );
         } catch (IllegalArgumentException e) {
 
             throw new IllegalArgumentException(
                     "Invalid vehicle status: " + status
+            );
+        }
+
+        VehicleStatus currentStatus = vehicle.getStatus();
+
+        // Same status - nothing to change
+        if (currentStatus == newStatus) {
+            return vehicle;
+        }
+
+        // AVAILABLE → RESERVED
+        if (currentStatus == VehicleStatus.AVAILABLE
+                && newStatus == VehicleStatus.RESERVED) {
+
+            vehicle.setStatus(newStatus);
+        }
+
+        // RESERVED → RENTED
+        else if (currentStatus == VehicleStatus.RESERVED
+                && newStatus == VehicleStatus.RENTED) {
+
+            vehicle.setStatus(newStatus);
+        }
+
+        // RENTED → AVAILABLE
+        else if (currentStatus == VehicleStatus.RENTED
+                && newStatus == VehicleStatus.AVAILABLE) {
+
+            vehicle.setStatus(newStatus);
+        }
+
+        // AVAILABLE → MAINTENANCE
+        else if (currentStatus == VehicleStatus.AVAILABLE
+                && newStatus == VehicleStatus.MAINTENANCE) {
+
+            vehicle.setStatus(newStatus);
+        }
+
+        // MAINTENANCE → AVAILABLE
+        else if (currentStatus == VehicleStatus.MAINTENANCE
+                && newStatus == VehicleStatus.AVAILABLE) {
+
+            vehicle.setStatus(newStatus);
+        }
+
+        else {
+            throw new IllegalStateException(
+                    "Invalid vehicle status transition: "
+                            + currentStatus
+                            + " → "
+                            + newStatus
             );
         }
 
