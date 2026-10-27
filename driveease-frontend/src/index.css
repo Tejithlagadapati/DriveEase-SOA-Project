@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #090b0e;
+    color: #e2e8f0;
+    font-family: 'Chakra Petch', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 0.015em;
+  }
+
+  ::selection {
+    background-color: #ff5a00;
+    color: #000000;
+  }
+}
+
+/* =========================================================================
+   VEHICULAR COCKPIT & CARBON FIBRE TEXTURES
+   ========================================================================= */
+
+/* Real Carbon Fiber weave background */
+.bg-carbon {
+  background: 
+    linear-gradient(27deg, #12151c 5px, transparent 5px) 0 5px,
+    linear-gradient(207deg, #12151c 5px, transparent 5px) 10px 0px,
+    linear-gradient(27deg, #171b24 5px, transparent 5px) 0px 10px,
+    linear-gradient(207deg, #171b24 5px, transparent 5px) 10px 5px,
+    linear-gradient(90deg, #0e1117 10px, transparent 10px),
+    linear-gradient(#0a0d12 25%, #0e1117 25%, #0e1117 50%, transparent 50%, transparent 75%, #141822 75%, #141822);
+  background-color: #0a0c10;
+  background-size: 20px 20px;
+}
+
+/* Subtle Automotive Carbon Mesh for cards */
+.bg-carbon-card {
+  background-color: #12151c;
+  background-image: 
+    linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.02) 75%);
+  background-size: 8px 8px;
+}
+
+/* Telemetry Cockpit Grid */
+.bg-hud-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 90, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 90, 0, 0.04) 1px, transparent 1px);
+}
+
+/* Angled Automotive Cutting Edge */
+.clip-cockpit {
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+
+.clip-badge-angled {
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.clip-tab-slanted {
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+}
+
+/* Automotive Digital Glows */
+.glow-orange {
+  box-shadow: 0 0 25px rgba(255, 90, 0, 0.4);
+}
+
+.glow-hud-pill {
+  box-shadow: inset 0 0 12px rgba(255, 90, 0, 0.25), 0 0 15px rgba(255, 90, 0, 0.3);
+}
+
+/* Tachometer Shift Light Animation */
+@keyframes tachometerPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; filter: drop-shadow(0 0 8px #ff5a00); }
+}
+
+.animate-tachometer {
+  animation: tachometerPulse 1.8s ease-in-out infinite;
+}
+
+/* Custom dark sleek scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #090b0e;
+}
+::-webkit-scrollbar-thumb {
+  background: #232b38;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff5a00;
+}
